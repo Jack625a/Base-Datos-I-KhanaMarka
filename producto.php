@@ -61,10 +61,22 @@
     $conexion->close();
 
     ?>
+
+<h2>Agregar nuevo Producto</h2>
+<form action="insercion.php" method="POST">
+    <label for="nombre">Nombre Producto: </label>
+    <input type="text" id="nombre" name="nombre"><br><br>
+    <label for="precio">Precio Producto: </label>
+    <input type="number" id="precio" name="precio"><br><br>
+    <label for="imagen">Url imagen Producto: </label>
+    <input type="text" id="imagen" name="imagen">
+    <br><br>
+    <input type="submit" value="Agregar nuevo Producto">
+
+
+</form>
+
+
 </body>
-
-
-
-
 
 </html>
