@@ -29,6 +29,24 @@
             <button type="submit" name="eliminar">Eliminar Producto</button>
         </form>
 
+    <?php
+    //Logica para eliminar un producto por el id de la seleccion
+    if(isset($_POST['eliminar'])){
+        $id_eliminar=$_POST['id_eliminar'];
+
+        //Consulta SQL PARA ELIMINAR UN PRODUCTO EN BASE LA SELECCION
+        $sql_eliminar="DELETE FROM productos WHERE id=$id_eliminar";
+
+        if($conexion->query($sql_eliminar)===TRUE){
+            echo "Producto Eliminado correctamente";
+        }else{
+            echo "Error al eliminar el producto: ". $conexion->error;
+        }
+    }
+    ?>
+
+
+
     </div>
     
 </body>
