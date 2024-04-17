@@ -33,6 +33,7 @@
     //Logica para eliminar un producto por el id de la seleccion
     if(isset($_POST['eliminar'])){
         $id_eliminar=$_POST['id_eliminar'];
+        echo $id_eliminar;
 
         //Consulta SQL PARA ELIMINAR UN PRODUCTO EN BASE LA SELECCION
         $sql_eliminar="DELETE FROM productos WHERE id=$id_eliminar";
