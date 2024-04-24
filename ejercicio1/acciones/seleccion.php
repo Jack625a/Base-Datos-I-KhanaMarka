@@ -26,6 +26,7 @@ $productos=obtenerProductos($conexion);
     <link rel="stylesheet" href="./public/estilos.css">
 </head>
 <body>
+    <div class="container">
     <h1>Productos Disponibles</h1>
     <a href="./acciones/insercion.php">Insertar Nuevo Producto</a>
     <br>
@@ -58,6 +59,8 @@ $productos=obtenerProductos($conexion);
         </tr>
         <?php endforeach; ?>
     </table>
+    </div>
+   
     
 </body>
 </html>
