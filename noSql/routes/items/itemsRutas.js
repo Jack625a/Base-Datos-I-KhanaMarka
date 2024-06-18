@@ -3,11 +3,14 @@ const express=require('express');
 const Airtable=require('airtable');
 const rutas=express.Router();
 
+
+//Paso Extra seguridad de datos sensibles de la base de datos
+require('dotenv').config();
 //Configuracion de la base de datos
 //Paso 3. Configuracion de Airtable
 const base=new Airtable({
-    apiKey:'patkAFH28nwoCbAPB.273dd25460a96ff17cdda14e39d69a5099ccf847d086680a7e8fa566ec91a011'
-}).base('apprHlbsmZxhsRzEt');
+    apiKey:process.env.AIRTABLE_API_KEY
+}).base(process.env.AIRTABLE_BASE_ID);
 
 //Armar las rutas
 //RUTA PARA OBTENER LOS REGISTROS
@@ -29,6 +32,24 @@ rutas.get('/',(req,res)=>{
     });
 });
 //Ruta para crear un nuevo producto
+rutas.post('/',(req,res)=>{
+    const nuevoProducto={
+        Nombre:req.body.nombre,
+        Precio:req.body.precio,
+        Imagen:req.body.imagen
+    };
+    base('Productos').create(nuevoProducto, (error, registros)=>{
+        if(error){
+            res.status(500).json({error: 'Error al conectar el servidor con airtable'});
+        } else{
+            res.status(201).json(registros.fields);
+        }
+    });
+});
+
+
+
+
 
 //Ruta para Actualizar un producto
 

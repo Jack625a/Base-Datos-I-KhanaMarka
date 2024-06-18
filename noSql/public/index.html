@@ -12,6 +12,22 @@
     <div id="item-list">
 
     </div>
+    <h1>Agregar Nuevos Productos</h1>
+    <form action="/items" method="post">
+        <label for="nombre">Nombre Producto: </label>
+        <input type="text" id="nombre" name="nombre" required><br>
+        <label for="precio">Precio: </label>
+        <input type="number" name="precio" id="precio" required><br>
+        <label for="imagen">Url de la Imagen: </label>
+        <input type="text" name="imagen" id="imagen" required>
+        <br>
+        <button type="submit">Agregar Producto</button>
+
+    </form>
+
+
+
+
 <script src="scripta.js"></script> 
 <script>
     //Configurar la funcion para mostrar los productos de la base de datos en cardview
@@ -51,6 +67,13 @@ async function obtenerElementos(){
 }
 //llamar a la funcion para obtener y mostrar los productos
 window.addEventListener('DOMContentLoaded',obtenerElementos);
+    
+//Creacion de un nuevo Producto
+
+
+
+
+
 </script>
 
 </body>
