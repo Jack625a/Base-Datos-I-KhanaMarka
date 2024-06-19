@@ -40,9 +40,16 @@ rutas.post('/',(req,res)=>{
     };
     base('Productos').create(nuevoProducto, (error, registros)=>{
         if(error){
-            res.status(500).json({error: 'Error al conectar el servidor con airtable'});
+            res.status(500).send('<script>alert("Error al conectar el servidor con airtable"); window.history.back();</script>');
         } else{
-            res.status(201).json(registros.fields);
+            res.status(201).send(`
+                <script>
+                    alert('Producto agregado: ${nuevoProducto.Nombre}');
+                    window.location.href="/";
+                    
+                </script>
+                
+                `);
         }
     });
 });
