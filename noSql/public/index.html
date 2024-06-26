@@ -25,7 +25,30 @@
 
     </form>
 
+    <h1>Eliminar un Producto</h1>
+    <div id="eliminar-producto">
+        <select name="selectEliminar" id="selectEliminar">
+            <option value="" disabled selected>Seleccione un producto a Eliminar</option>
+        </select>
+        <button onclick="eliminarProducto()">Eliminar Producto</button>
+    </div>
 
+    <h1>Actualizar un Producto</h1>
+    <select name="actualizarSeleccion" id="actualizarSeleccion">
+        <option value="" disabled selected>Seleccione un Producto</option>
+    </select>
+    <form id="formulario-actualizar">
+        <label for="nuevo-nombre">Nuevo Nombre: </label>
+        <input type="text" id="nuevo-nombre" name="nuevo-nombre" required>
+        <br>
+        <label for="nuevo-precio">Nuevo Precio: </label>
+        <input type="number" id="nuevo-precio" name="nuevo-precio" required>
+        <br>
+        <label for="nueva-imagen">Nueva Imagen: </label>
+        <input type="text" id="nueva-imagen" name="nueva-imagen" required>
+        <br>
+        <button type="button" onclick="actualizarProducto()">Actualizar Producto</button>
+    </form>
 
 
 <script src="scripta.js"></script> 
@@ -35,6 +58,11 @@ function mostrarProductos(elementos){
     const itemList=document.getElementById("item-list");
     itemList.innerHTML=""; //Limpiar el contenido anterior
 
+    const selectorEliminar=document.getElementById("selectEliminar");
+    const selectorActualizar=document.getElementById("actualizarSeleccion");
+    selectorEliminar.innerHTML='<option value="">Selecciona una opcion </option>';
+    selectorActualizar.innerHTML='<option value="">Selecciona una opcion </option>';
+    
     elementos.forEach(elemento=>{
         const card=document.createElement('div');
         card.classList.add('card');
@@ -51,7 +79,24 @@ function mostrarProductos(elementos){
         precio.textContent='Precio: '+elemento.Precio+'Bs';
         card.appendChild(precio);
 
+        //ID DE LOS PRODUCTOS
+        const id=document.createElement('p');
+        id.textContent='ID: '+elemento.id;
+
+
         itemList.appendChild(card);
+    
+        const opciones=document.createElement('option');
+        opciones.value=elemento.id;
+        opciones.textContent=elemento.Nombre;
+
+        const opciones2=document.createElement('option');
+        opciones2.value=elemento.id;
+        opciones2.textContent=elemento.Nombre;
+
+        selectorEliminar.appendChild(opciones);
+        selectorActualizar.appendChild(opciones2);
+
 
     });
 }
@@ -65,6 +110,28 @@ async function obtenerElementos(){
         console.error('Error al obtener los productos', error);
     }
 }
+
+
+
+//Funcion para Eliminar un Producto
+async function eliminarProducto(){
+    const id=document.getElementById('selectEliminar').value;
+    if(!id){
+        alert('Selecciona un producto para eliminar');
+        return;
+    }
+    try{
+        const respuesta=await fetch(`/items/${id}`,{
+            method: 'DELETE',
+        });
+        const data=await respuesta.json();
+        alert(data.mesaje);
+        obtenerElementos();//Actualizar la lista de productos
+    }catch(error){
+        console.error('Error al eliminar el producto', error);
+    }
+}
+
 //llamar a la funcion para obtener y mostrar los productos
 window.addEventListener('DOMContentLoaded',obtenerElementos);
     

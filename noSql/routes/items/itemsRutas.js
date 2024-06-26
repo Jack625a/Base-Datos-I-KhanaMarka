@@ -2,6 +2,7 @@
 const express=require('express');
 const Airtable=require('airtable');
 const rutas=express.Router();
+const path=require('path')
 
 
 //Paso Extra seguridad de datos sensibles de la base de datos
@@ -54,13 +55,31 @@ rutas.post('/',(req,res)=>{
     });
 });
 
-
-
-
-
 //Ruta para Actualizar un producto
+rutas.put('/:id',(req,res)=>{
+    const {id}=req.params;
+    const {nombre,precio,imagenUrl}=req.body;
+    base('Productos').update(id,{nombre,precio,imagenUrl},(error,registros)=>{
+        if(error){
+            res.status(500).json({error:'Error al actualizar el Producto'});
+        }else{
+            res.json(registros.fields);
+        }
+    });
+
+});
 
 //Ruta para Eliminar un Producto
+rutas.delete('/:id', (req,res)=>{
+    const {id}=req.params;
+    base('Productos').destroy(id,(error)=>{
+        if(error){
+            res.status(500).json({error: 'Error al eliminar el producto'});
+        } else{
+            res.json({mensaje:'Producto eliminado correctamente'});
+        }
+    });
+});
 
 
 //Exportar las ruta para todo el proyecto
